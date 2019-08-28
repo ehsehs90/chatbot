@@ -48,6 +48,7 @@ def square(number):
 @app.route('/menu')
 def menu():
     foods = ['바스버거', '대우식당', '진가와', '고갯마루']
+    print(type(foods[0]))
     return random.choice(foods)
 
 
@@ -155,9 +156,11 @@ def lotto():
     winner=temp
     result=random.sample(range(1, 47), 6)
    
-    # for i in result:
-    #     if i in winner:
-    #         cnt += i
+    # for i in range(6):
+    #      temp.append(res_dict['drwtNo{i+1}'])     i=0부터 시작한다. 
+    # for i in range(1,7):
+    #      temp.append(res_dict['drwtNo{i}'])     i=0부터 시작한다. 
+
 
     cnt=len(set(winner)&set(result))  
 

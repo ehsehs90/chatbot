@@ -24,3 +24,24 @@ method = 'sendMessage?'
 url = base_url +'bot'+ token + method + 'chat_id=' +str(chat_id) +'&text='+ msg
 
 requests.get(url)
+
+
+
+
+"""
+
+base_url = 'https://api.telegram.org'
+
+url = f'{base_url}/bot{token}/getUpdates'
+res = requests.get(url)
+res_dict = res.json()
+
+
+chat_id 가져오는 스텍
+chat_id = str(res_dict['result'][0]['message']['chat']['id'])
+
+
+url 조합
+text='와 자동화햇다'
+url = f'{base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={text}'
+"""

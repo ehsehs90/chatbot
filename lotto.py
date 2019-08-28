@@ -20,7 +20,7 @@ print(res_dict['drwtNo1'])
 
 
 
-#1등 번호 6개가 담긴 result 라는 list를 출력.
+# 1등 번호 6개가 담긴 result 라는 list를 출력.
 temp = []
 temp.append(res_dict['drwtNo1'])
 temp.append(res_dict['drwtNo2'])
@@ -30,3 +30,6 @@ temp.append(res_dict['drwtNo5'])
 temp.append(res_dict['drwtNo6'])
 
 print(temp)
+
+
+# 해당 코드를 /lotto 함수에 적용 가즈악
