@@ -1,5 +1,7 @@
 from flask import Flask
 import random
+import requests
+
 
 app = Flask(__name__)
 
@@ -39,8 +41,7 @@ def square(number):
 
     #number를 제곱하여 반환
     #url에서 들어오는 숫자는 글자로 들어와요
-    #1. 글자 number를 숫자로 변환
-   
+    #1. 글자 number를 숫자로 변환   
     return str(number ** 2)
 
 
@@ -69,7 +70,6 @@ def lottoo():
    # 4등
    # 만약 3개가 일치하면
    # 5등
-
    return str(sorted(a)) + str(rank)
 
 
@@ -77,15 +77,11 @@ def lottoo():
 def lottoe():
    winner = [3, 5, 12, 13, 33, 39]
    result=random.sample(range(1, 47), 6)
-  
-
-   
    for i in result:
        if i in winner:
            cnt += i
-           
+   
    rank='꽝'
-
    if cnt == 6:
        rank = "1등"
    elif cnt ==5:
@@ -94,7 +90,6 @@ def lottoe():
        rank = "4등"
    elif cnt == 3:
        rank = "5등"
-
    # 만약 6개가 모두 일치하면 
    # 1등
    # 만약 5개가 일치하면 
@@ -103,23 +98,21 @@ def lottoe():
    # 4등
    # 만약 3개가 일치하면
    # 5등
-
+  
    return str(sorted(result)) + str(rank)
 
 
-@app.route('/lotto')
-def lotto():
+@app.route('/lottoee')
+def lottoee():
    winner = [3, 5, 12, 13, 33, 39]
    result=random.sample(range(1, 47), 6)
    winner = [3, 5, 12, 13, 14, 15]
    cnt=len(set(winner), 6)
-  
 
-   
    for i in result:
        if i in winner:
            cnt += i
-           
+
    rank='꽝'
 
    if cnt == 6:
@@ -139,5 +132,54 @@ def lotto():
    # 4등
    # 만약 3개가 일치하면
    # 5등
-
    return str(sorted(result)) + str(rank)
+
+@app.route('/lotto')
+def lotto():
+    url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=873'
+
+    #갖고왔으면 응답으로 받아라
+    response = requests.get(url)
+    response.text
+    res_dict = response.json()
+
+    # 1등 번호 6개가 담긴 result 라는 list를 출력.
+    temp = []
+    temp.append(res_dict['drwtNo1'])
+    temp.append(res_dict['drwtNo2'])
+    temp.append(res_dict['drwtNo3'])
+    temp.append(res_dict['drwtNo4'])
+    temp.append(res_dict['drwtNo5'])
+    temp.append(res_dict['drwtNo6'])
+
+    winner=temp
+    result=random.sample(range(1, 47), 6)
+   
+    # for i in result:
+    #     if i in winner:
+    #         cnt += i
+
+    cnt=len(set(winner)&set(result))  
+
+    rank='꽝'
+    if cnt == 6:
+        rank = "1등"
+    elif cnt ==5:
+        rank = "3등"
+    elif cnt ==4:
+        rank = "4등"
+    elif cnt == 3:
+        rank = "5등"
+
+   # 만약 6개가 모두 일치하면 
+   # 1등
+   # 만약 5개가 일치하면 
+   # 3등
+   # 만약 4개가 일치하면
+   # 4등s
+   # 만약 3개가 일치하면
+   # 5등
+    return str(result)+rank
+
+
+
